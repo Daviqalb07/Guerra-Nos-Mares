@@ -6,10 +6,10 @@ using namespace std;
 
 
 int main(void){
-    int tabuleiro1[SIZE][SIZE], tabuleiro2[SIZE][SIZE], i, j, x, y, casas, menu = 5, entrar = 0 ,voltar = 0;
-    char player1[50], player2[50];
+    int tabuleiro1[SIZE][SIZE], tabuleiro2[SIZE][SIZE], i, j, x, y, navio, casas, menu = 5, entrar = 0 ,voltar = 0;
+    string player1, player2;
     setlocale(LC_ALL,"Portuguese");
-
+    
     for(i = 0 ; i < SIZE ; i++){
         for(j = 0 ; j < SIZE ; j++){
             tabuleiro1[i][j] = 0;
@@ -20,18 +20,12 @@ int main(void){
     //TELA INICIAL DO JOGO.
     system("clear || cls");
 
-    cout << " ================================================== " << endl << endl << endl << endl;
-    cout << "                  GUERRA NOS MARES                  " << endl << endl << endl << endl;
-    cout << " ================================================== " << endl << endl << endl << endl;
+    cout << " ================================================== " << endl << endl << endl;
+    cout << "                  GUERRA NOS MARES                  " << endl << endl << endl;
+    cout << " ================================================== " << endl << endl << endl;
 
-    cout << "Pressione 1 para iniciar : ";
-    cin >> entrar;
-    if(entrar != 1){
-        while(entrar != 1){
-            cout << "COMANDO INVALIDO / TECLE 1 PARA INICIAR : ";
-            cin >> entrar;
-        }
-    }
+    cout << "Pressione ENTER para iniciar : ";
+    cin.ignore();
 
     system("clear || cls");
 
@@ -47,8 +41,8 @@ int main(void){
         }
         else if(menu == 2){
             system("clear || cls");
-            cout << "\n\nGUERRA NOS MARES \n2020 EDITION \n\n\nDESENVOLVIDO POR: DAVI QUEIROZ ALBUQUERQUE \n\n";
-            cout << "\n\nDigite 3 para voltar ao menu : ";
+            cout << "\n\nGUERRA NOS MARES \nVERSÃO 2020 \n\n\nDESENVOLVIDO POR: DAVI QUEIROZ ALBUQUERQUE \n\n";
+            cout << "\n\nPressione qualquer tecla para voltar ao menu : ";
             cin >> voltar;
             menu = 5;
             system("clear || cls");
@@ -73,112 +67,106 @@ int main(void){
     cout << "EMBARCACOES: \n\n1. Corveta (1x2) \n2. Submarino (1x3) \n3. Fragata (1x3)" << endl;
     cout << "4. Destroyer (1x4) \n5. Cruzador (1x5) \n6. Porta-Avioes (2x6)" << endl << endl;
 
-
+    
     //Tabuleiro do 1º jogador.
+    int ships1[6] = {1, 1, 1, 1, 1, 1};
     cout << "------------------------- JOGADOR 1 -------------------------" << endl;
-    cout << endl << "Instale suas embarcacoes digitando suas coordenadas X (esquerda para a direita) e Y (de cima para baixo): " << endl << endl;
+    cout << endl << "Instale suas embarcacoes digitando suas coordenadas (X , Y) : " << endl << endl;
     for(i = 1 ; i <= 6 ; i++){
-        cout << "Navio: " << i << endl;
-        if(i == 1){
+        cout << "Navio: ";
+        cin >> navio;
+        if(navio > 6 || navio < 0){
+            while(navio > 6 || navio < 0){
+                cout << "DIGITE UM INDICE VALIDO: ";
+                cin >> navio;
+                cout << endl;
+            }
+        }
+        if(ships1[navio - 1] == 0){
+            while(ships1[navio - 1] == 0){
+                cout << "TIPO DE EMBARCACAO JA ESCOLHIDA / TENTE NOVAMENTE: ";
+                cin >> navio;
+                cout << endl;
+            }
+        }
+        if(navio == 1){
             casas = 2;
         }
-        else if(i == 2 || i == 3){
+        else if(navio == 2 || navio == 3){
             casas = 3;
         }
-        else if(i == 4){
+        else if(navio == 4){
             casas = 4;
         }
-        else if(i == 5){
+        else if(navio == 5){
             casas = 5;
         }
-        else if(i == 6){
+        else if(navio == 6){
             casas = 12;
         }
+
+        ships1[navio - 1] = 0;
 
         for(j = 1 ; j <= casas ; j++){
             printf("%2d. X = ", j);
             cin >> x;
-            if(x <= 0 || x > 15){
-                while(x <= 0 || x > 15){
-                    cout << "X invalido / Digite novamente \nX = ";
-                    cin >> x;
-                }
-            }
             cout << "    Y = ";
             cin >> y;
-            if(y <= 0 || y > 15){
-                while(y <= 0 || y > 15){
-                    cout << "Y invalido / Digite novamente \nY = ";
-                    cin >> y;
-                }
-            }
-            if(tabuleiro1[y][x] > 0){
-                while(tabuleiro1[y][x] != 0){
-                    cout << "COORDENADA OCUPADA / DIGITE OS VALORES DE X E Y NOVAMENTE: \nX = ";
-                    cin >> x;
-                    cout << "Y = ";
-                    cin >> y;
-                }
-            }
-            tabuleiro1[y][x] = i;
+            tabuleiro1[x][y] = navio;
         }
         cout << endl;
     }
     cout << endl;
     system("clear || cls");
-
+    
     //Mostra ao segundo jogador as embarcações.
     cout << "JOGADOR: " << player2 << endl << endl;
     cout << "EMBARCACOES: \n\n1. Corveta (1x2) \n2. Submarino (1x3) \n3. Fragata (1x3)" << endl;
     cout << "4. Destroyer (1x4) \n5. Cruzador (1x5) \n6. Porta-Avioes (2x6)" << endl << endl;
 
     //Tabuleiro do 2º jogador.
+    int ships2[6] = {1, 1, 1, 1, 1, 1};
     cout << "------------------------- JOGADOR 2 -------------------------" << endl;
-    cout << endl << "Instale suas embarcacoes digitando suas coordenadas X (esquerda para a direita) e Y (de cima para baixo): " << endl << endl;
+    cout << endl << "Instale suas embarcacoes digitando suas coordenadas (X , Y) : " << endl << endl;
     for(i = 1 ; i <= 6 ; i++){
-        cout << "Navio: " << i << endl;
-        if(i == 1){
+        cout << "Navio: ";
+        cin >> navio;
+        if(navio > 6 || navio < 0){
+            while(navio > 6 || navio < 0){
+                cout << "DIGITE UM INDICE VALIDO: ";
+                cin >> navio;
+            }
+        }
+        if(ships2[navio - 1] == 0){
+            while(ships2[navio - 1] == 0){
+                cout << "TIPO DE EMBARCACAO JA ESCOLHIDA / TENTE NOVAMENTE: ";
+                cin >> navio;
+            }
+        }
+        if(navio == 1){
             casas = 2;
         }
-        else if(i == 2 || i == 3){
+        else if(navio == 2 || navio == 3){
             casas = 3;
         }
-        else if(i == 4){
+        else if(navio == 4){
             casas = 4;
         }
-        else if(i == 5){
+        else if(navio == 5){
             casas = 5;
         }
-        else if(i == 6){
+        else if(navio == 6){
             casas = 12;
         }
+
+        ships2[navio - 1] = 0;
 
         for(j = 1 ; j <= casas ; j++){
             printf("%2d. X = ", j);
             cin >> x;
-            if(x <= 0 || x > 15){
-                while(x <= 0 || x > 15){
-                    cout << "\nX invalido / Digite novamente \nX = ";
-                    cin >> x;
-                }
-            }
             cout << "    Y = ";
             cin >> y;
-            if(y <= 0 || y > 15){
-                while(y <= 0 || y > 15){
-                    cout << "Y invalido / Digite novamente \nY = ";
-                    cin >> y;
-                }
-            }
-            if(tabuleiro2[y][x] > 0){
-                while(tabuleiro2[y][x] != 0){
-                    cout << "COORDENADA OCUPADA / DIGITE OS VALORES DE X E Y NOVAMENTE: \nX = ";
-                    cin >> x;
-                    cout << "Y = ";
-                    cin >> y;
-                }
-            }
-            tabuleiro2[y][x] = i;
+            tabuleiro2[x][y] = navio;
         }
         cout << endl;
     }
@@ -193,16 +181,18 @@ int main(void){
     while(!vencedor){
 
         system("clear || cls");
-
+        
         jogador = (n % 2) + 1; //Alterna entre os jogadores.
-        cout << "JOGADOR : " << jogador << endl;
+        cout << "JOGADOR : " << jogador;
+        if(jogador == 1) cout << " " << player1 << endl;
+        else if(jogador == 2) cout << " " << player2 << endl;
         cout << "---------------- MAPA DE ATAQUE ---------------" << endl << endl;
 
         /*
         Imprime o mapa de ataque para cada jogador.
         LEGENDA:
         [ - ] = coordenada livre
-        [ # ] = tiro no mar
+        [ # ] = tiro no mar 
         [ X ] = tiro certo
         */
 
@@ -256,30 +246,28 @@ int main(void){
         //Quando o jogador 1 ataca.
         if(jogador == 1){
             //Coordenada já escolhida.
-            if(tabuleiro2[y][x] <= -1){
-                cout << "TIRO INVALIDO / COORDENADA JA FOI ESCOLHIDA" << endl;
-                while(tabuleiro2[y][x] <= -1){
-                    cout << "Digite novamente: \nX = ";
-                    cin >> x;
-                    cout << "Y = ";
-                    cin >> y;
+            if(tabuleiro2[x][y] <= -1){
+                cout << "TIRO INVÁLIDO / COORDENADA JÁ FOI ESCOLHIDA" << endl;
+                while(tabuleiro2[x][y] <= -1){
+                    cout << "Digite novamente: ";
+                    cin >> x >> y;
                 }
             }
 
             //Possui embarcação e mostra qual foi acertada.
-            if(tabuleiro2[y][x] > 0){
+            else if(tabuleiro2[x][y] > 0){
                 if(jogador == 1){
-                    cout << "ACERTOU: " << tabuleiro2[y][x] << endl << endl;
-                    tabuleiro2[y][x] = -2;
+                    cout << "ACERTOU: " << tabuleiro2[x][y] << endl;
+                    tabuleiro2[x][y] = -2;
                     cont[2]--;
                 }
             }
 
             //Tiro no mar.
-            else if(tabuleiro2[y][x] == 0){
+            else if(tabuleiro2[x][y] == 0){
                 if(jogador == 1){
-                    cout << "ERROU: TIRO NO MAR" << endl << endl;
-                    tabuleiro2[y][x] = -1;
+                    cout << "ERROU: TIRO NO MAR" << endl;
+                    tabuleiro2[x][y] = -1;
                 }
             }
         }
@@ -287,30 +275,28 @@ int main(void){
         //Quando o jogador 2 ataca.
         else if(jogador == 2){
             //Coordenada já escolhida.
-            if(tabuleiro1[y][x] <= -1){
-                cout << "TIRO INVALIDO / COORDENADA JA FOI ESCOLHIDA" << endl;
-                while(tabuleiro1[y][x] <= -1){
-                    cout << "Digite novamente: \nX = ";
-                    cin >> x;
-                    cout << "Y = ";
-                    cin >> y;
+            if(tabuleiro1[x][y] <= -1){
+                cout << "TIRO INVÁLIDO / COORDENADA JÁ FOI ESCOLHIDA" << endl;
+                while(tabuleiro1[x][y] <= -1){
+                    cout << "Digite novamente: ";
+                    cin >> x >> y;
                 }
             }
 
             //Possui embarcação e mostra qual foi acertada.
-            if(tabuleiro1[y][x] > 0){
-                if(jogador == 2){
-                    cout << "ACERTOU: " << tabuleiro1[y][x] << endl << endl;
-                    tabuleiro1[y][x] = -2;
+            else if(tabuleiro1[x][y] > 0){
+                if(jogador == 1){
+                    cout << "ACERTOU: " << tabuleiro1[x][y] << endl;
+                    tabuleiro1[x][y] = -2;
                     cont[1]--;
                 }
             }
 
             //Tiro no mar.
-            else if(tabuleiro1[y][x] == 0){
-                if(jogador == 2){
-                    cout << "ERROU: TIRO NO MAR" << endl << endl;
-                    tabuleiro1[y][x] = -1;
+            else if(tabuleiro1[x][y] == 0){
+                if(jogador == 1){
+                    cout << "ERROU: TIRO NO MAR" << endl;
+                    tabuleiro1[x][y] = -1;
                 }
             }
         }
@@ -357,9 +343,8 @@ int main(void){
         }
 
         continua = 0;
-        cout << endl;
         while(continua != 5){
-            cout << "Digite 5 para o proximo jogador atacar : ";
+            cout << "Digite 5 para o próximo jogador atacar... ";
             cin >> continua;
         }
         n++; //Avança para o próximo jogador.
@@ -369,10 +354,10 @@ int main(void){
 
     //Imprime o vencedor e o mapa de cada um dos jogadores.
     if(cont[2] == 0){
-        cout << "GANHADOR : " << player1 << " !!!!!" << endl;
+        cout << "GANHADOR : JOGADOR 1 !!!!!" << endl;
     }
     else if(cont[1] == 0){
-        cout << "GANHADOR : " << player2 << " !!!!!" << endl;
+        cout << "GANHADOR : JOGADOR 2 !!!!!" << endl;
     }
 
     //Mapa JOGADOR 1
