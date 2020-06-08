@@ -6,10 +6,10 @@ using namespace std;
 
 
 int main(void){
-    int tabuleiro1[SIZE][SIZE], tabuleiro2[SIZE][SIZE], i, j, x, y, navio, casas, menu = 5, entrar = 0 ,voltar = 0;
+    int tabuleiro1[SIZE][SIZE], tabuleiro2[SIZE][SIZE], i, j, x, y, navio, casas, menu = 5, voltar = 0;
     string player1, player2;
     setlocale(LC_ALL,"Portuguese");
-    
+
     for(i = 0 ; i < SIZE ; i++){
         for(j = 0 ; j < SIZE ; j++){
             tabuleiro1[i][j] = 0;
@@ -36,19 +36,20 @@ int main(void){
         cout << "SELECIONE UMA OPCAO \n1. JOGAR \n2. SOBRE" << endl << endl;
         cout << "OPCAO: ";
         cin >> menu;
+        if(menu != 1 && menu != 2){
+            cout << "OPCAO NAO VALIDA / TENTE NOVAMENTE : ";
+            cin >> menu;
+        }
         if(menu == 1){
             continue;
         }
         else if(menu == 2){
             system("clear || cls");
-            cout << "\n\nGUERRA NOS MARES \nVERSÃO 2020 \n\n\nDESENVOLVIDO POR: DAVI QUEIROZ ALBUQUERQUE \n\n";
+            cout << "\n\nGUERRA NOS MARES \n2020 EDITION \n\n\nDESENVOLVIDO POR: DAVI QUEIROZ ALBUQUERQUE \n\n";
             cout << "\n\nPressione qualquer tecla para voltar ao menu : ";
             cin >> voltar;
             menu = 5;
             system("clear || cls");
-        }
-        else if(menu != 1 && menu != 2){
-            cout << "OPCAO NAO VALIDA / TENTE NOVAMENTE : ";
         }
     }
 
@@ -56,7 +57,7 @@ int main(void){
 
     //Pede o nome dos jogadores.
 
-    cout << "Digite o nome dos dois jogadores (sem espaços): \nJogador 1 : ";
+    cout << "Digite o nome dos dois jogadores (sem espacos): \nJogador 1 : ";
     cin >> player1;
     cout << "Jogador 2 : ";
     cin >> player2;
@@ -67,7 +68,7 @@ int main(void){
     cout << "EMBARCACOES: \n\n1. Corveta (1x2) \n2. Submarino (1x3) \n3. Fragata (1x3)" << endl;
     cout << "4. Destroyer (1x4) \n5. Cruzador (1x5) \n6. Porta-Avioes (2x6)" << endl << endl;
 
-    
+
     //Tabuleiro do 1º jogador.
     int ships1[6] = {1, 1, 1, 1, 1, 1};
     cout << "------------------------- JOGADOR 1 -------------------------" << endl;
@@ -118,7 +119,7 @@ int main(void){
     }
     cout << endl;
     system("clear || cls");
-    
+
     //Mostra ao segundo jogador as embarcações.
     cout << "JOGADOR: " << player2 << endl << endl;
     cout << "EMBARCACOES: \n\n1. Corveta (1x2) \n2. Submarino (1x3) \n3. Fragata (1x3)" << endl;
@@ -181,7 +182,7 @@ int main(void){
     while(!vencedor){
 
         system("clear || cls");
-        
+
         jogador = (n % 2) + 1; //Alterna entre os jogadores.
         cout << "JOGADOR : " << jogador;
         if(jogador == 1) cout << " " << player1 << endl;
@@ -192,7 +193,7 @@ int main(void){
         Imprime o mapa de ataque para cada jogador.
         LEGENDA:
         [ - ] = coordenada livre
-        [ # ] = tiro no mar 
+        [ # ] = tiro no mar
         [ X ] = tiro certo
         */
 
